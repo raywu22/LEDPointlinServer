@@ -1,3 +1,24 @@
+import flask
+from BoardState import BoardState
+
+app = flask.Flask(__name__)
+
+boardState = BoardState((0,0,0),70,70)
+
+
+@app.route('/')
+def index():
+        return "hi"
+
+@app.route('/boardData', methods=['POST'])
+def boardData():
+        print boardState.getMatrix()
+        return "hello"
+
+if __name__=="__main__":
+        app.run(None,3000,None)
+
+"""
 from webHandler import piHandler
 from BaseHTTPServer import BaseHTTPRequestHandler,HTTPServer
 
@@ -12,3 +33,5 @@ def main():
 
 if __name__ == '__main__':
 	main()
+"""
+
