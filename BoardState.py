@@ -8,8 +8,8 @@ class BoardState:
     
     def __init__(self, startColor, boardWidth, boardHeight):
         self.startColor = startColor
-        self.height = boardHeight
-        self.width = boardWidth
+        self.height = boardHeight #number of rows in board
+        self.width = boardWidth #number of columns in board
         self.matrix = [[self.startColor for y in range(self.height)] for x in range(self.width)]
 
     def getMatrix(self):
@@ -72,9 +72,9 @@ class BoardState:
                 self.matrix[x][y] = color
 
     #replaces display with an top-to-bottom gradient of TopColor to BottomColor
-    def setTopBottomGradient(self, TopColor, BottomColor):
+    def setTopBottomGradient(self, topColor, bottomColor):
         for y in range(self.height):
             for x in range(self.width):
-                color = tuple (int(round(BottomColor[i] * (float(y)/(self.height-1)) + TopColor[i] * (1.0 - float(y)/(self.height-1)))) for i in range(len(TopColor)))           
+                color = tuple (int(round(bottomColor[i] * (float(y)/(self.height-1)) + topColor[i] * (1.0 - float(y)/(self.height-1)))) for i in range(len(topColor)))           
                 self.matrix[x][y] = color
         

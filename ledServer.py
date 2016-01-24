@@ -35,3 +35,21 @@ if __name__ == '__main__':
 	main()
 """
 
+"""
+#takes in a json data structure and interprets it to perform the desired action
+def acceptCommand(data):
+        option_choice = data.get("option")
+        positions = data.get("positions") #positions of the LEDs that we wish to change
+        color = data.get("color") #tuple representing the color that the desired LEDs should be changed to
+        
+        if option_choice == "refresh": 
+                return boardState.getMatrix() #get the most recent state of the board
+        elif option_choice == "setStartColor":
+                boardState.setStartColor(color) #set the entire board to be "color"
+        elif option_choice == "setBackgroundColor":
+                pass
+        else:
+                pass
+"""
+                
+        
