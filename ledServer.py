@@ -1,5 +1,6 @@
 import flask
 import json
+from flask import jsonify
 from flask import request
 from BoardState import BoardState
 
@@ -18,8 +19,7 @@ def boardData():
         dataJSON = json.loads(request.data)
         option_choice = dataJSON["option"]        
         if option_choice == "refresh":
-                a = boardState.getMatrix()
-                return ','.join(str(r) for v in a for r in v)
+                return jsonify(data = boardState.getMatrix())
         elif option_choice == "setStartColor":
                 color = dataJSON["color"]
                 boardState.setStartColor(color) #set the entire board to be "color"
@@ -41,11 +41,11 @@ def boardData():
         	scale = dataJSON["scale"] #int representing the scaling factor
         	boardState.scaleBrightness(scale) #scale entire board's brightness
         else:
-                a = boardState.getMatrix()
-                return ','.join(str(r) for v in a for r in v)
-        #boardState.getMatrix()
-        a = boardState.getMatrix()
-        return ','.join(str(r) for v in a for r in v)
+                return jsonify(data = boardState.getMatrix())
+        
+        #a = boardState.getMatrix()
+        #return ','.join(str(r) for v in a for r in v)
+        return jsonify(data = boardState.getMatrix())
 
 if __name__=="__main__":
         app.run(None,3000,None)
