@@ -1,4 +1,6 @@
 import flask
+import json
+from flask import request
 from BoardState import BoardState
 
 app = flask.Flask(__name__)
@@ -12,8 +14,38 @@ def index():
 
 @app.route('/boardData', methods=['POST'])
 def boardData():
-        print boardState.getMatrix()
-        return "hello"
+        #print hi.body
+        dataJSON = json.loads(request.data)
+        option_choice = dataJSON["option"]        
+        if option_choice == "refresh":
+                a = boardState.getMatrix()
+                return ','.join(str(r) for v in a for r in v)
+        elif option_choice == "setStartColor":
+                color = dataJSON["color"]
+                boardState.setStartColor(color) #set the entire board to be "color"
+        elif option_choice == "setBackgroundColor":
+                color = dataJSON["color"]
+                boardState.setBackground(color)
+        elif option_choice == "setColorAtIndices":
+                color = dataJSON["color"]
+                indices = dataJSON["indices"]
+        	for index in indices:
+        		boardState.setColorSingleIndex(index,color)
+        elif option_choice == "reset":
+        	boardState.reset() #resets entire board to startColor
+        elif option_choice == "erase":
+                indices = dataJSON["indices"]
+        	for index in indices:
+        		boardState.reset(index) #resets LEDs at the desired indices only
+        elif option_choice == "scaleBrightness":
+        	scale = dataJSON["scale"] #int representing the scaling factor
+        	boardState.scaleBrightness(scale) #scale entire board's brightness
+        else:
+                a = boardState.getMatrix()
+                return ','.join(str(r) for v in a for r in v)
+        #boardState.getMatrix()
+        a = boardState.getMatrix()
+        return ','.join(str(r) for v in a for r in v)
 
 if __name__=="__main__":
         app.run(None,3000,None)
@@ -35,13 +67,13 @@ if __name__ == '__main__':
 	main()
 """
 
-"""
+
 #takes in a json data structure and interprets it to perform the desired action
 def acceptCommand(data):
-        option_choice = data.get("option")
-        positions = data.get("positions") #positions of the LEDs that we wish to change
-        color = data.get("color") #tuple representing the color that the desired LEDs should be changed to
-        
+        #dataJSON = json.loads(data)
+        print "hi"
+        return "hi"
+        """
         if option_choice == "refresh": 
                 return boardState.getMatrix() #get the most recent state of the board
         elif option_choice == "setStartColor":
@@ -50,6 +82,8 @@ def acceptCommand(data):
                 pass
         else:
                 pass
-"""
+        """
+        
+
                 
         
